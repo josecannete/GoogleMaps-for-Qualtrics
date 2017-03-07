@@ -1,12 +1,12 @@
 API_KEY = "AIzaSyAXb0kjzIAnegQxlts70A8rVT0cwL20XC0"
 
 /*
-Habran tres tipos de queries distintas:
+Habran dos tipos de queries distintas:
 typeQuery = 1 son queries donde solo queremos marcar un punto del mapa
 typeQuery = 2 son queries donde nos interesa un camino (polyline)
 */
 
-typeQuery = 1;
+typeQuery = 2;
 
 // Si la query es de polyline, es necesario escribir el maximo de puntos a aceptar
 maxPoints = 25;
@@ -84,7 +84,6 @@ initMapx = function() {
 /*
 Sirve para setear el canvas del mapa
 */
-
 function configurarCanvas(){
 	
     background = document.createElement("div");
@@ -102,7 +101,7 @@ function configurarCanvas(){
     canvas.setAttribute('style', 'width: 90%; height: 90%; margin: 5px auto; ');
     wrapper.appendChild(canvas);
 
-    // BOTON PARA CERRAR EL MAPA
+    // Boton para cerrar mapa
 
     button = document.createElement("button");
     button.innerHTML = "Cerrar";

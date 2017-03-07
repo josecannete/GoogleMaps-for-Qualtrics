@@ -6,7 +6,7 @@ typeQuery = 1 son queries donde solo queremos marcar un punto del mapa
 typeQuery = 2 son queries donde nos interesa un camino (polyline)
 */
 
-typeQuery = 2;
+typeQuery = 1;
 
 // Si la query es de polyline, es necesario escribir el maximo de puntos a aceptar
 maxPoints = 25;
@@ -32,6 +32,7 @@ var contadorPuntos = 0;
 Lanza el programa principal, iniciando un mapa segun el tipo de query
 */
 initMapx = function() {
+  Qualtrics.SurveyEngine.setEmbeddedData('Puntos', "probando");
   configurarCanvas();
   var mapOptions = {
       zoom: 15,
@@ -44,7 +45,7 @@ initMapx = function() {
 
   // GEOLOCALIZACION
 
-  // Try HTML5 geolocation.
+  //  HTML5 geolocation.
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       var pos = {
@@ -62,7 +63,6 @@ initMapx = function() {
   }
 
   // GEOCODER
-
   geocoder = new google.maps.Geocoder;
   //ejemplo
   /*
@@ -86,6 +86,7 @@ Sirve para setear el canvas del mapa
 */
 
 function configurarCanvas(){
+	
     background = document.createElement("div");
     background.id = 'map_canvas_background';
     background.setAttribute('style', 'position: absolute; width: 100%; height: 100%; background-color: auto; opacity: 0.6;filter:alpha(opacity=60); top: 0px;');
@@ -110,6 +111,7 @@ function configurarCanvas(){
       document.getElementById('map_canvas_wrapper').remove();
       google.maps.event.removeListener(listener);
       console.log("remove listener");
+		
       if (typeQuery == 1){
         var aux = markers.map(markerToLatLng);
         points = aux.map(latLngToPoint);
@@ -119,7 +121,19 @@ function configurarCanvas(){
         text1.value = points[0].lat;
         text2.value = points[0].lng;
       }
+		
       else{
+        /*
+        for (contadorPuntos; contadorPuntos < maxPoints; contadorPuntos++){
+          points = Caminos.getPath().getArray().map(latLngToPoint);
+          var text1 = $(question.getChoiceContainer()).down('.InputText', 0);
+          var text2 = $(question.getChoiceContainer()).down('.InputText', 1);
+          text1.value = "";
+          text2.value = "";
+          if (contadorPuntos < maxPoints - 1)
+            question.clickNextButton();
+        }
+        */
         points = Caminos.getPath().getArray().map(latLngToPoint);
         var agregar = "";
         for (i = 0; i < contadorPuntos; i++){
@@ -191,7 +205,6 @@ function latLngToPoint(latLng) {
   return point;
 }
 
-
 function singlePointQuery(){
     listener = map.addListener('click', function(event) {
       deleteMarkers();
@@ -234,6 +247,17 @@ function removePos() {
 
 function getCaminos() {
   return Caminos.getPath();
+}
+
+// Guarda un punto y pasa clickea el boton next
+function guardarPunto() {
+  points = Caminos.getPath().getArray().map(latLngToPoint);
+  //var text1 = $(question.getChoiceContainer()).down('.InputText', 0);
+  //var text2 = $(question.getChoiceContainer()).down('.InputText', 1);
+  //text1.value = points[contadorPuntos - 1].lat;
+  //text2.value = points[contadorPuntos - 1].lng;
+  Qualtrics.SurveyEngine.setEmbeddedData('Puntos', 
+  points[contadorPuntos - 1].lat.toString() + ',' + points[contadorPuntos - 1].lng.toString());
 }
 
 

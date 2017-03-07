@@ -36,7 +36,15 @@ var contadorPuntos = 0;
 Lanza el programa principal, iniciando un mapa segun el tipo de query
 */
 initMapx = function() {
-  Qualtrics.SurveyEngine.setEmbeddedData('Puntos', "probando");
+  canvas = null;
+  map = null;
+  markers = [];
+  points = [];
+  question = this;
+  listener = null;
+  Caminos = null;
+  geocoder = null;
+  contadorPuntos = 0;
   configurarCanvas();
   var mapOptions = {
       zoom: 15,

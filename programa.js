@@ -146,7 +146,7 @@ function configurarCanvas(){
     }
 }
 
-// Adds a marker to the map and push to the array.
+// Coloca un marcador en el mapa, y lo almacena en 'markers'.
 function addMarker(location) {
   var marker = new google.maps.Marker({
     position: location,
@@ -155,24 +155,24 @@ function addMarker(location) {
   markers.push(marker);
 }
 
-// Sets the map on all markers in the array.
+// Coloca los marcadores almacenado en 'markers'.
 function setMapOnAll(map) {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(map);
   }
 }
 
-// Removes the markers from the map, but keeps them in the array.
+// Elimina los marcadore del mapa, pero se mantienen almacenados.
 function clearMarkers() {
   setMapOnAll(null);
 }
 
-// Shows any markers currently in the array.
+// Muestra todos los marcadores.
 function showMarkers() {
   setMapOnAll(map);
 }
 
-// Deletes all markers in the array by removing references to them.
+// Elimina los marcadores.
 function deleteMarkers() {
   clearMarkers();
   markers = [];
@@ -242,11 +242,7 @@ function guardarPunto() {
   points[contadorPuntos - 1].lat.toString() + ',' + points[contadorPuntos - 1].lng.toString());
 }
 
-//ejemplo
-/*
-  var input = "40.714224,-73.961452";
-  var resultados = geocodeLatLng(geocoder, map, input);
-*/
+// Determinar nombre del lugar a partir del coordenadas.
 function geocodeLatLng(geocoder, map, input) {
   var latlngStr = input.split(',', 2);
   var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};

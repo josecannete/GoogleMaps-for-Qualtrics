@@ -11,18 +11,19 @@ En primer lugar, una vez abierto los mapas, lo primero que el navegador le pregu
 
 1 - Crear un nuevo proyecto en la plataforma Qualtrics
 
-2 - Modificamos el texto de la pregunta de la siguiente forma:
+2 - Crear una nueva pregunta y modificamos el texto de la pregunta de la siguiente forma:
 
 ![alt tag](http://i.imgur.com/oZFR6qw.png)
 
 Aquí cambiamos Normal View a HTML View y escribimos lo siguiente:
-"Escribe tu pregunta aquí
-
-<a href="javascript:void(0)" onclick="initMapx();">Haz click para ir al mapa</a>"
+```javascript
+Escribe tu pregunta aquí
+<a href="javascript:void(0)" onclick="initMapx();">Haz click para ir al mapa</a>
+```
 
 ![alt tag](http://i.imgur.com/9Qxgtoc.png)
 
-3 - Crear una nueva pregunta y dirigirnos a Ajustes -> Add Javascript, como se indica en la siguiente figura:
+3 - Nos dirigimos a Ajustes -> Add Javascript, como se indica en la siguiente figura:
 
 ![alt tag](http://i.imgur.com/QKqH8MT.png)
 

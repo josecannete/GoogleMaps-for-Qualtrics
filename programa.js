@@ -177,11 +177,13 @@ function deleteMarkers() {
   markers = [];
 }
 
+// A partir de un objeto de clase marker, el metodo devuelve un objeto de clase latLng.
 function markerToLatLng(marker) {
   var LatLng = marker.getPosition();
   return LatLng;
 }
 
+// A partir de un objeto de clase latLng, el metodo devuelve un objeto point.
 function latLngToPoint(latLng) {
   point = {
     lat: latLng.lat(),

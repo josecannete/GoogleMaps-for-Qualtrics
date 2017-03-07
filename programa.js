@@ -70,7 +70,6 @@ initMapx = function() {
       handleLocationError(true, infoWindow, map.getCenter());
     });
   } else {
-    // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter());
   }
 
@@ -142,7 +141,7 @@ function configurarCanvas(){
     };
     wrapper.appendChild(button);
 
-    // SI LA QUERY ES POLYLINE AGREGAMOS UN BOTON PARA BORRAR EL ULTIMO PUNTO
+    // Boton para borrar ultimo punto.
 
     if (typeQuery == 2){
       buttonEliminar = document.createElement("button");
@@ -154,7 +153,7 @@ function configurarCanvas(){
     }
 }
 
-// Adds a marker to the map and push to the array.
+// Coloca un marcador en el mapa, y lo almacena en 'markers'.
 function addMarker(location) {
   var marker = new google.maps.Marker({
     position: location,
@@ -163,35 +162,36 @@ function addMarker(location) {
   markers.push(marker);
 }
 
-// Sets the map on all markers in the array.
+// Coloca los marcadores almacenado en 'markers'.
 function setMapOnAll(map) {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(map);
   }
 }
 
-// Removes the markers from the map, but keeps them in the array.
+// Elimina los marcadore del mapa, pero se mantienen almacenados.
 function clearMarkers() {
   setMapOnAll(null);
 }
 
-// Shows any markers currently in the array.
+// Muestra todos los marcadores.
 function showMarkers() {
   setMapOnAll(map);
 }
 
-// Deletes all markers in the array by removing references to them.
+// Elimina los marcadores.
 function deleteMarkers() {
   clearMarkers();
   markers = [];
 }
 
-
+// A partir de un objeto de clase marker, el metodo devuelve un objeto de clase latLng.
 function markerToLatLng(marker) {
   var LatLng = marker.getPosition();
   return LatLng;
 }
 
+// A partir de un objeto de clase latLng, el metodo devuelve un objeto point.
 function latLngToPoint(latLng) {
   point = {
     lat: latLng.lat(),
@@ -200,6 +200,7 @@ function latLngToPoint(latLng) {
   return point;
 }
 
+// Coloca un marcador en el mapa.
 function singlePointQuery(){
     listener = map.addListener('click', function(event) {
       deleteMarkers();
@@ -208,6 +209,10 @@ function singlePointQuery(){
   });
 }
 
+/* 
+Forma un 'camino' a partir de una serie de puntos en el mapa, las 
+coordenadas de los distintos puntos se almacenan en el arreglo 'Caminos'.
+*/
 function polylineQuery() {
   Caminos = new google.maps.Polyline({
     strokeColor: "#0000FF",
@@ -218,6 +223,7 @@ function polylineQuery() {
   listener = map.addListener('click', addPos); 
 }
 
+// Almacena una nueva coordenada (posicion) en el arreglo 'Caminos'.
 function addPos(event) {
   if (contadorPuntos < maxPoints){
     var path = Caminos.getPath();
@@ -232,15 +238,11 @@ function addPos(event) {
   }
 }
 
+// Elimina la ultima coordenada almacenada en el arreglo 'Caminos'.
 function removePos() {
   Caminos.getPath().pop();
   if (contadorPuntos > 0)
     contadorPuntos--;
-}
-
-
-function getCaminos() {
-  return Caminos.getPath();
 }
 
 // Guarda un punto y pasa clickea el boton next
@@ -250,11 +252,7 @@ function guardarPunto() {
   points[contadorPuntos - 1].lat.toString() + ',' + points[contadorPuntos - 1].lng.toString());
 }
 
-//ejemplo
-/*
-  var input = "40.714224,-73.961452";
-  var resultados = geocodeLatLng(geocoder, map, input);
-*/
+// Determinar nombre del lugar a partir del coordenadas.
 function geocodeLatLng(geocoder, map, input) {
   var latlngStr = input.split(',', 2);
   var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};

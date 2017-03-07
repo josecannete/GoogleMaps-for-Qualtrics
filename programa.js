@@ -62,7 +62,6 @@ initMapx = function() {
       handleLocationError(true, infoWindow, map.getCenter());
     });
   } else {
-    // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter());
   }
 
@@ -134,7 +133,7 @@ function configurarCanvas(){
     };
     wrapper.appendChild(button);
 
-    // SI LA QUERY ES POLYLINE AGREGAMOS UN BOTON PARA BORRAR EL ULTIMO PUNTO
+    // Boton para borrar ultimo punto.
 
     if (typeQuery == 2){
       buttonEliminar = document.createElement("button");
@@ -178,7 +177,6 @@ function deleteMarkers() {
   markers = [];
 }
 
-
 function markerToLatLng(marker) {
   var LatLng = marker.getPosition();
   return LatLng;
@@ -192,6 +190,7 @@ function latLngToPoint(latLng) {
   return point;
 }
 
+// Coloca un marcador en el mapa.
 function singlePointQuery(){
     listener = map.addListener('click', function(event) {
       deleteMarkers();
@@ -200,6 +199,10 @@ function singlePointQuery(){
   });
 }
 
+/* 
+Forma un 'camino' a partir de una serie de puntos en el mapa, las 
+coordenadas de los distintos puntos se almacenan en el arreglo 'Caminos'.
+*/
 function polylineQuery() {
   Caminos = new google.maps.Polyline({
     strokeColor: "#0000FF",
@@ -210,6 +213,7 @@ function polylineQuery() {
   listener = map.addListener('click', addPos); 
 }
 
+// Almacena una nueva coordenada (posicion) en el arreglo 'Caminos'.
 function addPos(event) {
   if (contadorPuntos < maxPoints){
     var path = Caminos.getPath();
@@ -224,15 +228,11 @@ function addPos(event) {
   }
 }
 
+// Elimina la ultima coordenada almacenada en el arreglo 'Caminos'.
 function removePos() {
   Caminos.getPath().pop();
   if (contadorPuntos > 0)
     contadorPuntos--;
-}
-
-
-function getCaminos() {
-  return Caminos.getPath();
 }
 
 // Guarda un punto y pasa clickea el boton next

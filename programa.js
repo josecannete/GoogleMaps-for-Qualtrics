@@ -11,6 +11,10 @@ typeQuery = 1;
 // Si la query es de polyline, es necesario escribir el maximo de puntos a aceptar
 maxPoints = 25;
 
+// Si la query es de tipo 1, debemos ingresar el numero del cuadro de texto en que guardaremos los datos (0-indexado)
+cuadroLatitud = 0;
+cuadroLongitud = 1;
+
 
 var script = document.createElement("script");
 script.type = "text/javascript";
@@ -111,8 +115,8 @@ function configurarCanvas(){
         var aux = markers.map(markerToLatLng);
         points = aux.map(latLngToPoint);
         console.log(points[0].lat);
-        var text1 = $(question.getChoiceContainer()).down('.InputText', 0);
-        var text2 = $(question.getChoiceContainer()).down('.InputText', 1);
+        var text1 = $(question.getChoiceContainer()).down('.InputText', cuadroLatitud);
+        var text2 = $(question.getChoiceContainer()).down('.InputText', cuadroLongitud);
         text1.value = points[0].lat;
         text2.value = points[0].lng;
       }
@@ -239,11 +243,11 @@ function guardarPunto() {
   points[contadorPuntos - 1].lat.toString() + ',' + points[contadorPuntos - 1].lng.toString());
 }
 
-  //ejemplo
-  /*
+//ejemplo
+/*
   var input = "40.714224,-73.961452";
   var resultados = geocodeLatLng(geocoder, map, input);
-  */
+*/
 function geocodeLatLng(geocoder, map, input) {
   var latlngStr = input.split(',', 2);
   var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};

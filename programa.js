@@ -1,7 +1,7 @@
 API_KEY = "AIzaSyAXb0kjzIAnegQxlts70A8rVT0cwL20XC0"
 
 /*
-Habran tres tipos de queries distintas:
+Habran dos tipos de queries distintas:
 typeQuery = 1 son queries donde solo queremos marcar un punto del mapa
 typeQuery = 2 son queries donde nos interesa un camino (polyline)
 */
@@ -64,11 +64,6 @@ initMapx = function() {
 
   // GEOCODER
   geocoder = new google.maps.Geocoder;
-  //ejemplo
-  /*
-  var input = "40.714224,-73.961452";
-  var resultados = geocodeLatLng(geocoder, map, input);
-  */
 
 
   // QUERIES
@@ -123,17 +118,6 @@ function configurarCanvas(){
       }
 		
       else{
-        /*
-        for (contadorPuntos; contadorPuntos < maxPoints; contadorPuntos++){
-          points = Caminos.getPath().getArray().map(latLngToPoint);
-          var text1 = $(question.getChoiceContainer()).down('.InputText', 0);
-          var text2 = $(question.getChoiceContainer()).down('.InputText', 1);
-          text1.value = "";
-          text2.value = "";
-          if (contadorPuntos < maxPoints - 1)
-            question.clickNextButton();
-        }
-        */
         points = Caminos.getPath().getArray().map(latLngToPoint);
         var agregar = "";
         for (i = 0; i < contadorPuntos; i++){
@@ -234,7 +218,6 @@ function addPos(event) {
       map: map
     });
     contadorPuntos++;
-    //guardarPunto();
   }
 }
 
@@ -252,15 +235,15 @@ function getCaminos() {
 // Guarda un punto y pasa clickea el boton next
 function guardarPunto() {
   points = Caminos.getPath().getArray().map(latLngToPoint);
-  //var text1 = $(question.getChoiceContainer()).down('.InputText', 0);
-  //var text2 = $(question.getChoiceContainer()).down('.InputText', 1);
-  //text1.value = points[contadorPuntos - 1].lat;
-  //text2.value = points[contadorPuntos - 1].lng;
   Qualtrics.SurveyEngine.setEmbeddedData('Puntos', 
   points[contadorPuntos - 1].lat.toString() + ',' + points[contadorPuntos - 1].lng.toString());
 }
 
-
+  //ejemplo
+  /*
+  var input = "40.714224,-73.961452";
+  var resultados = geocodeLatLng(geocoder, map, input);
+  */
 function geocodeLatLng(geocoder, map, input) {
   var latlngStr = input.split(',', 2);
   var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};

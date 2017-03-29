@@ -1,4 +1,5 @@
-API_KEY = "AIzaSyAXb0kjzIAnegQxlts70A8rVT0cwL20XC0"
+API_KEY = "TuAPIKEYdeGoogleMaps"
+
 
 /*
 Habran dos tipos de queries distintas:
